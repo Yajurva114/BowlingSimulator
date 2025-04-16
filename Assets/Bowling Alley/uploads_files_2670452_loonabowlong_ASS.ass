@@ -1,0 +1,111 @@
+### exported: Sun Oct 25 00:34:30 2020
+### from:     Arnold 5.3.0.1 [567ba37e] windows icc-17.0.2 oiio-2.1.0 osl-1.11.0 vdb-4.0.0 clm-1.0.3.513 rlm-12.4.2 optix-6.0.0 2019/03/26 14:03:19
+### host app: MtoA 3.2.0.2 c6ab94ec (master) Maya 2019
+### bounds: 0 0 0 0 0 0
+### user: dell
+### render_layer: defaultRenderLayer
+### scene: C:/Users/dell/OneDrive/Documents/Yves.mb
+
+
+
+options
+{
+ AA_samples 4
+ outputs "RGBA RGBA defaultArnoldFilter@gaussian_filter defaultArnoldDriver@driver_exr.RGBA"
+ xres 1280
+ yres 720
+ texture_per_file_stats on
+ texture_searchpath "C:/Users/dell/OneDrive/Documents/maya/projects/default/sourceimages"
+ texture_automip off
+ camera "perspShape"
+ color_manager "defaultColorMgtGlobals"
+ frame 1
+ procedural_searchpath "C:/Users/dell/OneDrive/Documents/maya/projects/default/"
+ GI_diffuse_depth 1
+ GI_specular_depth 1
+ GI_transmission_depth 8
+ declare render_layer constant STRING
+ render_layer "defaultRenderLayer"
+}
+
+gaussian_filter
+{
+ name defaultArnoldFilter@gaussian_filter
+}
+
+driver_exr
+{
+ name defaultArnoldDriver@driver_exr.RGBA
+ filename "C:/Users/dell/OneDrive/Documents/maya/projects/default/images/Yves.exr"
+ color_space ""
+}
+
+color_manager_syncolor
+{
+ name defaultColorMgtGlobals
+ native_catalog_path "C:/Program Files/Autodesk/Maya2019/synColor"
+ custom_catalog_path "C:/Users/dell/OneDrive/Documents/maya/synColor/Shared/"
+ rendering_color_space "scene-linear Rec 709/sRGB"
+}
+
+quad_light
+{
+ name pasted__areaLightShape22
+ matrix
+ 23.8641911 0 0 0
+ 0 16.0037136 0 0
+ 0 0 16.0037136 0
+ 0 22.4968662 59.0297737 1
+ color 0.00774917239 0.00387448817 0.253246754
+ intensity 1500
+ exposure 0
+ cast_shadows on
+ cast_volumetric_shadows on
+ shadow_density 1
+ shadow_color 0.0324675329 0.0324675329 0.0324675329
+ samples 3
+ normalize on
+ camera 0
+ transmission 0
+ diffuse 1
+ specular 1
+ sss 1
+ indirect 1
+ max_bounces 999
+ volume_samples 2
+ volume 1
+ aov "default"
+ vertices 4 1 b85VECTOR
+yaRT=dzaRT=daRT=dzaRT=dyzyyz
+ resolution 512
+ roundness 0
+ soft_edge 0
+ spread 1
+ declare maya_full_name constant STRING
+ maya_full_name "|group13|pasted__areaLight22|pasted__areaLightShape22"
+}
+
+persp_camera
+{
+ name perspShape
+ matrix
+ 0.550480723 0 -0.834847867 0
+ -0.522418499 0.780011714 -0.344471544 0
+ 0.651191115 0.625764906 0.42938143 0
+ 109.941345 130.769043 77.5795364 1
+ near_clip 0.100000001
+ far_clip 10000
+ shutter_start 0
+ shutter_end 0
+ shutter_type "box"
+ rolling_shutter "off"
+ rolling_shutter_duration 0
+ motion_start 0
+ motion_end 0
+ exposure 0
+ fov 54.4322243
+ uv_remap 0 0 0 1
+ declare maya_full_name constant STRING
+ maya_full_name "|persp|perspShape"
+}
+
