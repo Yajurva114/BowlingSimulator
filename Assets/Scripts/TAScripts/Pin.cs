@@ -4,12 +4,18 @@ using System.Collections.Generic;
 
 public class PinManager : MonoBehaviour
 {
+    public Transform spawnPointsContainer;
     public GameObject pinPrefab; // Prefab for a single pin
     public Transform[] pinPositions; // Array of initial pin positions
     public List<GameObject> currentPins = new List<GameObject>();
+    private List<Transform> spawnPoints = new List<Transform>();
 
     private int throwCount = 0;
 
+    void Awake() {
+        foreach (Transform child in spawnPointsContainer)
+            spawnPoints.Add(child);
+    }
     void Start()
     {
         // Initialize the pins at the start of the game
@@ -33,7 +39,7 @@ public class PinManager : MonoBehaviour
     if (throwCount == 1)
     {
         Debug.Log("[PinManager] First throw: scheduling pin removal in 1s");
-        Invoke(nameof(RemoveKnockedDownPins), 10f);
+        Invoke(nameof(RemoveKnockedDownPins), 2f);
     }
     else if (throwCount == 2)
     {
@@ -93,7 +99,7 @@ public class PinManager : MonoBehaviour
     // Resets pins to their initial positions
     private void ResetPins()
     {
-        // Destroy existing pins
+        //Destroy existing pins
         foreach (GameObject pin in currentPins)
         {
             if (pin != null)
@@ -102,14 +108,17 @@ public class PinManager : MonoBehaviour
 
         currentPins.Clear();
 
-        // Instantiate new pins at the initial positions
-        foreach (Transform position in pinPositions)
+        foreach (var marker in spawnPoints)
         {
-            if(position == null) {
+            if(marker == null) {
                 Debug.LogWarning("[PinManager] Skipping a null pinPosition marker!");
                 continue;
             }
-            GameObject newPin = Instantiate(pinPrefab, position.position, position.rotation);
+            if(pinPrefab == null) {
+                Debug.LogWarning("[PinManager] Skipping a null pinPrefab marker!");
+                continue;
+            }
+            var newPin = Instantiate(pinPrefab, marker.position, marker.rotation);
             currentPins.Add(newPin);
         }
     }
