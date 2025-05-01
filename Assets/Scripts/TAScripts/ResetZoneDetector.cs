@@ -7,7 +7,7 @@ public class ResetZoneDetector : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //if(other.tag == ball)
-        pin_manager.OnThrow();
+        //pin_manager.OnThrow();
 
         ///add the ball reset call here too
         

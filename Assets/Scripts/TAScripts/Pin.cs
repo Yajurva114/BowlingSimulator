@@ -10,7 +10,7 @@ public class PinManager : MonoBehaviour
     public List<GameObject> currentPins = new List<GameObject>();
     private List<Transform> spawnPoints = new List<Transform>();
 
-    private int throwCount = 0;
+    //private int throwCount = 0;
 
     void Awake() {
         foreach (Transform child in spawnPointsContainer)
@@ -31,23 +31,23 @@ public class PinManager : MonoBehaviour
 
 
 
-    public void OnThrow()
-{
-    throwCount++;
-    Debug.Log($"[PinManager] OnThrow called — throwCount is now {throwCount}");
+//     public void OnThrow()
+// {
+//     throwCount++;
+//     Debug.Log($"[PinManager] OnThrow called — throwCount is now {throwCount}");
 
-    if (throwCount == 1)
-    {
-        Debug.Log("[PinManager] First throw: scheduling pin removal in 1s");
-        Invoke(nameof(RemoveKnockedDownPins), 2f);
-    }
-    else if (throwCount == 2)
-    {
-        Debug.Log("[PinManager] Second throw: scheduling full reset in 1s");
-        Invoke(nameof(ResetPins), 1f);
-        throwCount = 0;
-    }
-}
+//     if (throwCount == 1)
+//     {
+//         Debug.Log("[PinManager] First throw: scheduling pin removal in 1s");
+//         Invoke(nameof(RemoveKnockedDownPins), 2f);
+//     }
+//     else if (throwCount == 2)
+//     {
+//         Debug.Log("[PinManager] Second throw: scheduling full reset in 1s");
+//         Invoke(nameof(ResetPins), 1f);
+//         throwCount = 0;
+//     }
+// }
 
     // Removes pins that have fallen over
     // issue could be function may not be called. 
@@ -81,7 +81,7 @@ public class PinManager : MonoBehaviour
                 Debug.LogWarning(
                     $"[PinManager] Destroying '{pin.name}' — tipped over!"
                 );
-                pin.SetActive(false);
+                Destroy(pin);
             }
             else
             {
@@ -97,7 +97,7 @@ public class PinManager : MonoBehaviour
 
 [ContextMenu("reset Pings")]
     // Resets pins to their initial positions
-    private void ResetPins()
+    public void ResetPins()
     {
         //Destroy existing pins
         foreach (GameObject pin in currentPins)
