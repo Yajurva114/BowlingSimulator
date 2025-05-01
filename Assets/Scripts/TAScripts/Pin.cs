@@ -81,7 +81,7 @@ public class PinManager : MonoBehaviour
                 Debug.LogWarning(
                     $"[PinManager] Destroying '{pin.name}' — tipped over!"
                 );
-                Destroy(pin);
+                pin.SetActive(false);
             }
             else
             {

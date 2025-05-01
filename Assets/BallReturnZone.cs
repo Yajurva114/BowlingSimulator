@@ -7,55 +7,52 @@ public class BallReturnZone : MonoBehaviour
     [Tooltip("Your PinManager instance")]
     public PinManager pinManager;
 
+    [Tooltip("First ball's BallRespawner")]
+    public BallRespawner ballRespawner1;
+
+    [Tooltip("Second ball's BallRespawner")]
+    public BallRespawner ballRespawner2;
+
     private int passCount = 0;
 
     private void OnTriggerEnter(Collider other)
     {
+        // only start the coroutine once per pass
         if (!other.CompareTag("Ball")) return;
-
-        // start the delayed handling, passing the ball's collider
-        StartCoroutine(HandleBallPass(other));
+        StartCoroutine(HandleBallPass());
     }
 
-    private IEnumerator HandleBallPass(Collider ballCollider)
+    private IEnumerator HandleBallPass()
     {
         passCount++;
 
-        bool first = passCount == 1;
-        bool second = passCount == 2;
+        if (passCount == 1)
+            Debug.Log("[BallReturnZone] First pass – scheduling pin removal in 3s");
+        else if (passCount == 2)
+            Debug.Log("[BallReturnZone] Second pass – scheduling full rack reset in 3s");
 
-        Debug.Log(first
-            ? "[BallReturnZone] First pass – scheduling pin removal in 3s"
-            : "[BallReturnZone] Second pass – scheduling full rack reset in 3s");
-
-        // **hide** the ball visually & turn off its collider so it "disappears"
-        var ballGO = ballCollider.gameObject;
-        var renderer = ballGO.GetComponent<Renderer>();
-        var collider = ballCollider;
-        if (renderer != null) renderer.enabled = false;
-        collider.enabled = false;
-
-        // let physics settle and give the player feedback
+        // wait so the pins can settle or the player can see the gutter
         yield return new WaitForSeconds(3f);
 
-        // do pins logic
-        if (first)
+        // pin logic
+        if (passCount == 1)
             pinManager.RemoveKnockedDownPins();
-        else if (second)
+        else if (passCount == 2)
         {
             pinManager.ResetPins();
             passCount = 0;
         }
 
-        // **respawn** the ball
-        var respawner = ballGO.GetComponent<BallRespawner>();
-        if (respawner != null)
-            respawner.RespawnBall();
-        else
-            Debug.LogWarning("[BallReturnZone] No BallRespawner on ball!");
-
-        // **un-hide** the ball
-        if (renderer != null) renderer.enabled = true;
-        collider.enabled = true;
+        // respawn *both* balls
+        if (ballRespawner1 != null)
+        {
+            Debug.Log("[BallReturnZone] Respawning ball 1");
+            ballRespawner1.RespawnBall();
+        }
+        if (ballRespawner2 != null)
+        {
+            Debug.Log("[BallReturnZone] Respawning ball 2");
+            ballRespawner2.RespawnBall();
+        }
     }
 }
